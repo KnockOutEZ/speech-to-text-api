@@ -5,6 +5,7 @@ r2 = sr.Recognizer()
 r3 = sr.Recognizer()
 array = []
 
+
 with sr.Microphone() as source:
     print ('Speak Now')
     audio = r2.listen(source)
@@ -12,13 +13,10 @@ with sr.Microphone() as source:
     print (result)
 
 
-if 'list' in r2.recognize_google(audio):
-    r2 = sr.Recognizer()
-    with sr.Microphone() as source:
-        print ('What do you wanna add?')
-        audio = r2.listen(source)
+
+if 'to list' or 'in list' in r2.recognize_google(audio):
         try:
-            output = r2.recognize_google(audio)
+            output = r2.recognize_google(audio).replace("to list",'').replace("add",'').replace("in list","")
             print (output)
             array.append(output)
             print(array)
@@ -27,14 +25,35 @@ if 'list' in r2.recognize_google(audio):
         except sr.RequestError as e:
             print ('failed' . format (e))
 
+if 'Trigger list' in r2.recognize_google(audio):
+    r2 = sr.Recognizer()
+    with sr.Microphone() as source:
+        print ('What do you wanna add?')
+        audio = r2.listen(source)
+        try:
+            output = r2.recognize_google(audio)
+            print (output)
+            array.pop()
+            array.append(output)
+            print(array)
+            # with sr.Microphone() as source:
+            #     print ('Do you wanna add anything else?')
+            #     audio = r2.listen(source)
+            #     result = r2.recognize_google(audio)
+            #     if 'yes' in r2.recognize_google(audio):
+        except sr.UnknownValueError:
+            print ('error')
+        except sr.RequestError as e:
+            print ('failed' . format (e))
 
-if 'search' in r2.recognize_google(audio):
+if 'search online' in r2.recognize_google(audio):
     r2 = sr.Recognizer()
     url = 'https://www.google.com/search?q='
     try:
         get = r2.recognize_google(audio).replace('search', '').replace('online', '')
         print (get)
         wb.get().open_new(url+get)
+        array.pop()
     except sr.UnknownValueError:
         print ('error')
     except sr.RequestError as e:
@@ -50,6 +69,7 @@ if 'search Google' in r2.recognize_google(audio):
             get = r2.recognize_google(audio)
             print (get)
             wb.get().open_new(url+get)
+            array.pop()
         except sr.UnknownValueError:
             print ('error')
         except sr.RequestError as e:
@@ -65,7 +85,11 @@ if 'search YouTube' in r1.recognize_google(audio):
             get = r1.recognize_google(audio)
             print (get)
             wb.get().open_new(url+get)
+            array.pop()
         except sr.UnknownValueError:
             print ('error')
         except sr.RequestError as e:
             print ('failed' . format (e))
+
+
+print(array)
