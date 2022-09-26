@@ -1,3 +1,4 @@
+import os
 import speech_recognition as sr
 import webbrowser as wb
 r1 = sr.Recognizer()
@@ -86,6 +87,18 @@ if 'search YouTube' in r1.recognize_google(audio):
             print (get)
             wb.get().open_new(url+get)
             array.pop()
+        except sr.UnknownValueError:
+            print ('error')
+        except sr.RequestError as e:
+            print ('failed' . format (e))
+
+
+if "shut down my pc" in r2.recognize_google(audio).lower():
+        try:
+            output = r2.recognize_google(audio)
+            print (output)
+            array.pop()
+            os.system("shutdown /s /t 1")
         except sr.UnknownValueError:
             print ('error')
         except sr.RequestError as e:
