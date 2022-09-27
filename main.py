@@ -1,15 +1,17 @@
 import os
 import speech_recognition as sr
 import webbrowser as wb
+from dotenv import load_dotenv
 from flask import Flask
+load_dotenv()
 app = Flask(__name__)
 r1 = sr.Recognizer()
 r2 = sr.Recognizer()
 r3 = sr.Recognizer()
 array = [] 
 
-@app.route('/result',methods=["GET"])
-def result():
+@app.route('/',methods=["GET"])
+def main():
      with sr.Microphone() as source:
         print ('Speak Now')
         audio = r2.listen(source)
@@ -25,7 +27,7 @@ def result():
             return "error"
 
 if __name__ == '__main__':
-    app.run(debug=True,port=2000)
+    app.run(debug=True,port=os.getenv('PORT'))
 
 
 
