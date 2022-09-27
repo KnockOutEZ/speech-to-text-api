@@ -10,8 +10,13 @@ array = []
 with sr.Microphone() as source:
     print ('Speak Now')
     audio = r2.listen(source)
-    result = r2.recognize_google(audio)
-    print (result)
+    try:
+        result = r2.recognize_google(audio)
+        print (result)
+    except sr.UnknownValueError:
+        print ('error')
+    except sr.RequestError as e:
+        print ('failed' . format (e))
 
 
 
@@ -91,7 +96,6 @@ if 'search YouTube' in r1.recognize_google(audio):
             print ('error')
         except sr.RequestError as e:
             print ('failed' . format (e))
-
 
 if "shut down my pc" in r2.recognize_google(audio).lower():
         try:
