@@ -13,7 +13,7 @@ array = []
 @app.route('/',methods=["GET"])
 def main():
      with sr.Microphone() as source:
-        print ('Speak Now')
+        print ('Give voice command:')
         audio = r2.listen(source)
         try:
             result = r2.recognize_google(audio)
