@@ -10,7 +10,7 @@ r2 = sr.Recognizer()
 r3 = sr.Recognizer()
 array = [] 
 
-@app.route('/',methods=["GET"])
+@app.route('/command',methods=["GET"])
 def main():
      with sr.Microphone() as source:
         print ('Give voice command:')
